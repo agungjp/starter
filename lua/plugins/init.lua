@@ -55,4 +55,13 @@ return {
       notifier = { enabled = true },
     },
   },
+
+  {
+    "coder/claudecode.nvim",
+    dependencies = { "folke/snacks.nvim" },
+    lazy = false,
+    config = function()
+      require("claudecode").setup()
+    end,
+  },
 }
