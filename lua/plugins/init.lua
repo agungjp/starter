@@ -61,11 +61,7 @@ return {
     dependencies = { "folke/snacks.nvim" },
     lazy = false,
     config = function()
-      require("claudecode").setup({
-        terminal = {
-          split_width_percentage = 1.0,
-        },
-      })
+      require("claudecode").setup()
     end,
   },
 }
