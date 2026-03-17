@@ -61,7 +61,12 @@ return {
     dependencies = { "folke/snacks.nvim" },
     lazy = false,
     config = function()
-      require("claudecode").setup()
+      require("claudecode").setup({
+        terminal = {
+          provider = "external",
+          external_terminal_cmd = "kitty %s",
+        },
+      })
     end,
   },
 }
