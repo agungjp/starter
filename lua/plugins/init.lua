@@ -62,15 +62,7 @@ return {
     lazy = false,
     config = function()
       require("claudecode").setup({
-        terminal = {
-          provider = "snacks",
-          snacks_win_opts = {
-            position = "float",
-            width = 0.99,
-            height = 0.99,
-            border = "none",
-          },
-        },
+        terminal = { provider = "none" },
       })
     end,
   },

@@ -115,10 +115,31 @@ map("n", "<leader>wk", function()
   vim.cmd("WhichKey " .. vim.fn.input "WhichKey: ")
 end, { desc = "whichkey query lookup" })
 
--- Claude Code
-map({ "n", "t" }, "<leader>ac", "<cmd>ClaudeCode<CR>", { desc = "claude toggle" })
+-- Claude Code — buka di Neovim tab baru (terminal full)
+map("n", "<leader>ac", function()
+  -- cari tab yang sudah ada claude, kalau ada switch ke sana
+  for i = 1, vim.fn.tabpagenr("$") do
+    local wins = vim.api.nvim_tabpage_list_wins(vim.api.nvim_list_tabpages()[i])
+    for _, w in ipairs(wins) do
+      local buf = vim.api.nvim_win_get_buf(w)
+      local name = vim.api.nvim_buf_get_name(buf)
+      if name:match("claude") then
+        vim.cmd(i .. "tabnext")
+        return
+      end
+    end
+  end
+  -- belum ada, buka tab baru dengan claude
+  vim.cmd("tabnew")
+  vim.cmd("term claude")
+  vim.cmd("setlocal nonumber norelativenumber")
+end, { desc = "claude open/focus tab" })
 
-map("n", "<leader>an", "<cmd>ClaudeCode --no-resume<CR>", { desc = "claude new parallel session" })
+map("n", "<leader>an", function()
+  vim.cmd("tabnew")
+  vim.cmd("term claude --no-resume")
+  vim.cmd("setlocal nonumber norelativenumber")
+end, { desc = "claude new parallel session" })
 
 -- Tab navigation
 map("n", "<leader>]", "<cmd>tabnext<CR>", { desc = "tab next" })
