@@ -58,7 +58,7 @@ map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" }
 map("n", "<leader>e", function()
   local api = require("nvim-tree.api")
   api.tree.toggle({ focus = false })
-end, { desc = "nvimtree toggle sidebar" })
+end, { desc = "nvimtree toggle no focus" })
 
 -- telescope
 map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "telescope live grep" })
