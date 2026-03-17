@@ -61,7 +61,16 @@ return {
     dependencies = { "folke/snacks.nvim" },
     lazy = false,
     config = function()
-      require("claudecode").setup()
+      require("claudecode").setup({
+        terminal = {
+          provider = "snacks",
+          snacks_win_opts = {
+            width = 1.0,
+            height = 1.0,
+            border = "none",
+          },
+        },
+      })
     end,
   },
 }
