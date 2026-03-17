@@ -116,7 +116,25 @@ map("n", "<leader>wk", function()
 end, { desc = "whichkey query lookup" })
 
 -- Claude Code
-map({ "n", "t" }, "<leader>ac", "<cmd>ClaudeCode<CR>", { desc = "claude toggle" })
+map({ "n", "t" }, "<leader>ac", function()
+  local claude_visible = false
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    local bt = vim.api.nvim_get_option_value("buftype", { buf = buf })
+    local name = vim.api.nvim_buf_get_name(buf)
+    if bt == "terminal" and name:match("claude") then
+      claude_visible = true
+      break
+    end
+  end
+  if claude_visible then
+    vim.cmd("ClaudeCode") -- toggle off
+  else
+    -- sembunyikan semua window kecuali satu, lalu buka Claude
+    vim.cmd("only")
+    vim.cmd("ClaudeCode")
+  end
+end, { desc = "claude toggle fullscreen" })
 
 map("n", "<leader>an", "<cmd>ClaudeCode --no-resume<CR>", { desc = "claude new parallel session" })
 

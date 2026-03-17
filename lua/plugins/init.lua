@@ -63,8 +63,7 @@ return {
     config = function()
       require("claudecode").setup({
         terminal = {
-          provider = "external",
-          external_terminal_cmd = "kitty %s",
+          split_width_percentage = 1.0,
         },
       })
     end,
