@@ -113,9 +113,9 @@ map("n", "<leader>wk", function()
 end, { desc = "whichkey query lookup" })
 
 -- Claude Code
-map({ "n", "t" }, "<leader>ac", "<cmd>ClaudeCode<CR>", { desc = "Claude toggle" })
+map({ "n", "t" }, "<leader>ac", "<cmd>ClaudeCode<CR>", { desc = "claude toggle" })
 
-map("n", "<leader>an", "<cmd>ClaudeCode --no-resume<CR>", { desc = "Claude new parallel session" })
+map("n", "<leader>an", "<cmd>ClaudeCode --no-resume<CR>", { desc = "claude new parallel session" })
 
 -- Tab navigation
 map("n", "<leader>]", "<cmd>tabnext<CR>", { desc = "tab next" })
