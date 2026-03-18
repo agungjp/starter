@@ -70,6 +70,10 @@ map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = 
 map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
 map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
 map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
+map("n", "<leader>fp", function()
+  vim.cmd("tabnew")
+  require("telescope").extensions.project.project{}
+end, { desc = "telescope switch project (tab baru)" })
 
 map("n", "<leader>th", function()
   require("nvchad.themes").open()
@@ -115,31 +119,14 @@ map("n", "<leader>wk", function()
   vim.cmd("WhichKey " .. vim.fn.input "WhichKey: ")
 end, { desc = "whichkey query lookup" })
 
--- Claude Code — buka di Neovim tab baru (terminal full)
-map("n", "<leader>ac", function()
-  -- cari tab yang sudah ada claude, kalau ada switch ke sana
-  for i = 1, vim.fn.tabpagenr("$") do
-    local wins = vim.api.nvim_tabpage_list_wins(vim.api.nvim_list_tabpages()[i])
-    for _, w in ipairs(wins) do
-      local buf = vim.api.nvim_win_get_buf(w)
-      local name = vim.api.nvim_buf_get_name(buf)
-      if name:match("claude") then
-        vim.cmd(i .. "tabnext")
-        return
-      end
-    end
-  end
-  -- belum ada, buka tab baru dengan claude
-  vim.cmd("tabnew")
-  vim.cmd("term claude")
+-- Claude Code — buka claude buffer baru di window aktif
+map({ "n", "t" }, "<leader>ac", function()
+  local cwd = vim.fn.getcwd()
+  vim.cmd("enew")
+  vim.fn.termopen("claude", { cwd = cwd })
   vim.cmd("setlocal nonumber norelativenumber")
-end, { desc = "claude open/focus tab" })
-
-map("n", "<leader>an", function()
-  vim.cmd("tabnew")
-  vim.cmd("term claude --no-resume")
-  vim.cmd("setlocal nonumber norelativenumber")
-end, { desc = "claude new parallel session" })
+  vim.cmd("startinsert")
+end, { desc = "claude buka buffer baru" })
 
 -- Tab navigation
 map("n", "<leader>]", "<cmd>tabnext<CR>", { desc = "tab next" })

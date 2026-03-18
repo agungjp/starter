@@ -57,6 +57,29 @@ return {
   },
 
   {
+    "nvim-telescope/telescope-project.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    lazy = false,
+    config = function()
+      require("telescope").setup {
+        extensions = {
+          project = {
+            base_dirs = {
+              { path = "~/.claude" },
+              { path = "~/Sandbox/orbit" },
+              { path = "~/Sandbox" },
+            },
+            hidden_files = true,
+            theme = "dropdown",
+            cd_scope = { "tab", "window" },
+          },
+        },
+      }
+      require("telescope").load_extension("project")
+    end,
+  },
+
+  {
     "coder/claudecode.nvim",
     dependencies = { "folke/snacks.nvim" },
     lazy = false,
